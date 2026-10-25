@@ -73,6 +73,23 @@ class AlienFleet:
 
         self.fleet.add(new_alien)
 
+    def _check_fleet_edges(self):
+        alien: Alien
+        for alien in self.fleet:
+            if alien.check_edges():
+                self._drop_alien_fleet()
+                self.fleet_direction *= -1
+                break
+
+    def _drop_alien_fleet(self) -> None:
+        for alien in self.fleet:
+            alien.y += self.fleet_drop_speed # The rect here breaks the drop, I forgot to add it and it worked originally!
+
+
+    def update_fleet(self) -> None:
+        self._check_fleet_edges()
+        self.fleet.update()
+
     def draw(self) -> None:
         alien: 'Alien'
         for alien in self.fleet:
