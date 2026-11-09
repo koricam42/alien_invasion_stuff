@@ -19,6 +19,7 @@ class Settings:
         self.FPS = 60
         self.bg_file = Path.cwd() / 'Assets' / 'images' / 'Starbasesnow.png'
         self.difficulty_scale = 1.1
+        self.scores_file = Path.cwd() / 'Assets' / 'file' / 'scores.json'
 
         self.ship_file = Path.cwd() / 'Assets' / 'images' / 'ship2(no bg).png'
         self.ship_w = 40
@@ -52,7 +53,7 @@ class Settings:
         self.bullet_amount = 5
         self.bullet_w = 25
         self.bullet_h = 80
-        
+
         self.fleet_speed = 2
         self.fleet_drop_speed = 40
         self.alien_points = 50
