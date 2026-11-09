@@ -1,5 +1,5 @@
 """
-Name: Alien Invasion
+Name: Game Settings
 Author: Jordan Mensah
 Purpose: Stores game speeds, filepaths, dimensions, and configurables
 Date: 10/18/26
@@ -8,11 +8,10 @@ Source Code: https://courses.cscc.edu/ultra/courses/_238744_1/assessment/_287416
 from pathlib import Path  
 
 class Settings:
-    """Class to store game settings
-    """
+    """Class to store game settings"""
+
     def __init__(self) -> None:
-        """Initalizes the games settings and asset filepaths
-        """
+        """Initalizes the games settings and asset filepaths"""
         self.name: str = 'Alien Invasion'
         self.screen_w = 1200
         self.screen_h = 800

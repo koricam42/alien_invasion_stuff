@@ -1,5 +1,5 @@
 """
-Name: Alien Invasion
+Name: Game Stats
 Author: Jordan Mensah
 Purpose: Holds...
 Date: 10/25/26
@@ -14,8 +14,10 @@ if TYPE_CHECKING:
     from alien_invasion import AlienInvasion    
 
 class GameStats():
+    """Class to track the game statistics"""
 
     def __init__(self, game: 'AlienInvasion') -> None:
+        """Initializes the game statistics with the game instance"""
         self.game = game
         self.settings = game.settings
         self.max_score = 0
@@ -23,6 +25,7 @@ class GameStats():
         self.reset_stats()
 
     def init_saved_scores(self) -> None:
+        """Initializes the saved scores from the scores file"""
         self.path = self.settings.scores_file
         if self.path.exists() and self.path.stat.__sizeof__() > 20:
             contents = self.path.read_text()
@@ -34,6 +37,7 @@ class GameStats():
             # save the file
 
     def save_scores(self) -> None:
+        """Saves the current high score to the scores file"""
         scores = {
             'hi_score': self.hi_score
         }
@@ -44,35 +48,46 @@ class GameStats():
             print(f"Error: File not found: {e}")
 
     def reset_stats(self) -> None:
+        """Resets the game stats to their initial values"""
         self.ships_left = self.settings.starting_ship_count
         self.score = 0
         self.level = 1
      
     def update(self, collisions) -> None:
+        """Updates the game statistics based on collisions"""
         # update score
         self._update_score(collisions) 
         # update max score
         self._update_max_score()
         # update hi-score
-        self._update_hi_score
+        self._update_hi_score()
 
     def _update_max_score(self) -> None:
+        """Updates the max score if the current score exceeds it"""
         if self.score > self.max_score:
             self.max_score = self.score
         # print(f"Max: {self.max_score})")
 
     def _update_hi_score(self) -> None:
+        """Updates the high score if the current score exceeds it"""
         if self.score > self.hi_score:
             self.hi_score = self.score
         # print(f"Max: {self.hi_score})")
 
     def _update_score(self, collisions) -> None:
+        """"Updates the score based on the number of aliens hit
+
+        Args:
+            collisions (dict): The collisions that occurred in the game,
+            used to update the score based on the number of aliens hit.
+        """
         for aliens in collisions.values():
-            self.score += self.settings.alien_points
+            self.score += self.settings.alien_points * len(aliens)
 
         # print(f"Basic: {self.score}")
 
     def update_level(self) -> None:
+        """Increases the level by 1"""
         self.level += 1
         print(self.level)
 

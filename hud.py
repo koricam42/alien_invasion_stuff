@@ -52,7 +52,7 @@ class HUD:
 
     def _update_max_score(self) -> None:
         """Updates the max score image"""
-        max_score_str = f'Max Score: {self.game_stats.score: ,.0f}'
+        max_score_str = f'Max Score: {self.game_stats.max_score: ,.0f}'
         self.max_score_image = self.font.render(max_score_str, True,
             self.settings.text_color, None)
         self.max_score_rect = self.max_score_image.get_rect()
@@ -61,7 +61,7 @@ class HUD:
 
     def _update_hi_score(self) -> None:
         """Updates the high score image"""
-        hi_score_str = f'High Score: {self.game_stats.score: ,.0f}'
+        hi_score_str = f'High Score: {self.game_stats.hi_score: ,.0f}'
         self.hi_score_image = self.font.render(hi_score_str, True,
             self.settings.text_color, None)
         self.hi_score_rect = self.hi_score_image.get_rect()

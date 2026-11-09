@@ -19,11 +19,10 @@ from button import Button
 from hud import HUD
 
 class AlienInvasion:
-    """Class to manage game state and behavior
-    """
+    """Class to manage game state and behavior"""
+
     def __init__(self) -> None:
-        """Initalizes the game, settings, display, audio mixer, and ship
-        """
+        """Initalizes the game, settings, display, audio mixer, and ship"""
         pygame.init()
         self.settings = Settings()
         self.settings.initialize_dynamic_settings()
@@ -58,8 +57,7 @@ class AlienInvasion:
         self.game_active = False
 
     def run_game(self) -> None:
-        """Starts and runs the game loop at a set frame rate
-        """
+        """Starts and runs the game loop at a set frame rate"""
         while self.running:
             self._check_events()
             if self.game_active:
@@ -70,7 +68,7 @@ class AlienInvasion:
             self.clock.tick(self.settings.FPS)
 
     def _check_collisons(self) -> None:
-        # check collsions for ship
+        """Checks for collisions between the ship, aliens, and projectiles"""
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
             # Subtract one life if possible
@@ -96,6 +94,7 @@ class AlienInvasion:
             self.HUD.update_level()
 
     def _check_game_status(self) -> None:
+        """Checks if the player has any lives left and updates the game state accordingly"""
         if self.game_stats.ships_left > 0:
             self.game_stats.ships_left -= 1
             self._reset_level()
@@ -104,11 +103,13 @@ class AlienInvasion:
             self.game_active = False
      
     def _reset_level(self) -> None: 
+        """Resets the level by clearing the arsenal and alien fleet, and creating a new fleet"""
         self.ship.arsenal.arsenal.empty()
         self.alien_fleet.fleet.empty()
         self.alien_fleet.create_fleet()
 
     def restart_game(self) -> None:
+        """Restarts the game by reinitializing dynamic settings, resetting stats, and centering the ship""" 
         self.settings.initialize_dynamic_settings()
         self.game_stats.reset_stats()
         self.HUD.update_scores()
@@ -146,6 +147,7 @@ class AlienInvasion:
                 self._check_button_clicked()
 
     def _check_button_clicked(self):
+        """Checks if the play button was clicked and restarts the game if so"""
         mouse_pos = pygame.mouse.get_pos()
         if self.play_button.check_clicked(mouse_pos):
             self.restart_game()
