@@ -21,6 +21,8 @@ class Bullet(Sprite):
 
         Args:
             game (AlienInvasion): Reference to the active alien invasion instance
+            x (int): The x coordinate of the bullet.
+            y (int): The y coordinate of the bullet.
         """
         super().__init__()
         self.screen = game.screen
@@ -46,4 +48,35 @@ class Bullet(Sprite):
         """Draws the bullet onto the screen
         """
         self.screen.blit(self.image, self.rect)
+
+class EnemyBullet(Sprite):
+    """Class that manages fired bullets from the alien fleet"""
+
+    def __init__(self, game: 'AlienInvasion', x, y) -> None: # Temp replace alien with x,y coord for testing, add back later
+        """Initalizes a bullet object at the current midbottom position"""
+
+        super().__init__()
+        self.screen = game.screen
+        self.settings = game.settings
+
+        self.image = pygame.image.load(self.settings.bullet_file)
+        self.image = pygame.transform.scale(self.image, (self.settings.bullet_w, self.settings.bullet_h))
+
+        self.rect = self.image.get_rect()
+
+        self.rect.midbottom = (x, y) # alien.rect.midbottom replaced with x,y for testing, add back later
+        self.y = float(self.rect.y)
     
+    def update(self) -> None:
+        """Moves the bullet down the screen based on currently configured bullet speed"""
+        self.y += self.settings.enemy_bullet_speed
+        self.rect.y = self.y
+
+    def draw_bullet(self) -> None:
+        """Draws the bullet onto the screen"""
+        self.screen.blit(self.image, self.rect)
+
+
+
+
+        
