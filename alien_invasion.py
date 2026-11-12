@@ -11,8 +11,8 @@ import pygame
 from settings import Settings
 # from game_stats import GameStats
 from ship import Ship
-from arsenal import ShipArsenal
-# from alien import Alien
+from arsenal import ShipArsenal, EnemyArsenal
+# from alien imporst Alien
 # from alien_fleet import AlienFleet
 # from time import sleep
 # from button import Button
@@ -26,6 +26,7 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
         self.settings.initialize_dynamic_settings()
+        self.EnemyArsenal = EnemyArsenal(self)
         
 
         self.screen = pygame.display.set_mode(
@@ -62,6 +63,8 @@ class AlienInvasion:
             self._check_events()
             if self.game_active:
                 self.ship.update()
+                self.EnemyArsenal.spawn_test_bullet()
+                self.EnemyArsenal.update()
                 # self.alien_fleet.update_fleet() 
                 # self._check_collisons()
             self._update_screen()
@@ -122,6 +125,7 @@ class AlienInvasion:
         """Redrawss the screen and ship, then flips it to the new display"""
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
+        self.EnemyArsenal.draw()
         # self.alien_fleet.draw()
         # self.HUD.draw()
 
@@ -151,7 +155,7 @@ class AlienInvasion:
     #     mouse_pos = pygame.mouse.get_pos()
     #     if self.play_button.check_clicked(mouse_pos):
     #         self.restart_game()
-
+        
     def _check_keyup_events(self, event) -> None:
         """Responds to keypresses to stop ship movement
 
@@ -183,7 +187,7 @@ class AlienInvasion:
             self.running = False
             # self.game_stats.save_scores()
             pygame.quit()
-            sys.exit
+            sys.exit()
 
 if __name__ == '__main__':
     """Creates a game instance to run the game"""

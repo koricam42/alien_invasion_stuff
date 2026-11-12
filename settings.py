@@ -49,7 +49,11 @@ class Settings:
         self.starting_ship_count = 3
         
         self.bullet_speed = 7
+        self.enemy_bullet_speed = 5
+
         self.bullet_amount = 5
+        self.enemy_bullet_amount = 3
+
         self.bullet_w = 25
         self.bullet_h = 80
 

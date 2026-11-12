@@ -53,7 +53,13 @@ class EnemyBullet(Sprite):
     """Class that manages fired bullets from the alien fleet"""
 
     def __init__(self, game: 'AlienInvasion', x, y) -> None: # Temp replace alien with x,y coord for testing, add back later
-        """Initalizes a bullet object at the current midbottom position"""
+        """Initalizes a bullet object at the current midbottom position
+
+        Args:
+            game (AlienInvasion): Reference to the active alien invasion instance
+            x (int): The x coordinate of the enemy bullet.    
+            y (int): The y coordinate of the enemy bullet.
+        """
 
         super().__init__()
         self.screen = game.screen
