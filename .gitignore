@@ -7,3 +7,5 @@ score.json
 Assets/file/scores.json
 
 .vscode/
+
+.DS_Store

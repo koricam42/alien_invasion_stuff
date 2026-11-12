@@ -12,7 +12,7 @@ class Settings:
 
     def __init__(self) -> None:
         """Initalizes the games settings and asset filepaths"""
-        self.name: str = 'Alien Invasion'
+        self.name: str = 'Alien Invasion - Track 1 Mechanics'
         self.screen_w = 1200
         self.screen_h = 800
         self.FPS = 60

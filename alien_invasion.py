@@ -186,7 +186,6 @@ class AlienInvasion:
             sys.exit
 
 if __name__ == '__main__':
-    """Creates a game instance to run the game
-    """
+    """Creates a game instance to run the game"""
     ai = AlienInvasion()
     ai.run_game()
