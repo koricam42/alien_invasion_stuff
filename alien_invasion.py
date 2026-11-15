@@ -7,6 +7,8 @@ Date: 10/18/26
 Source Code: https://courses.cscc.edu/ultra/courses/_238744_1/assessment/_28741609_1/overview?linkContentId=_28741609_1&courseId=_238744_1
 """
 import sys
+import random
+from powerup import Powerup
 import pygame
 from settings import Settings
 # from game_stats import GameStats
@@ -27,7 +29,7 @@ class AlienInvasion:
         self.settings = Settings()
         self.settings.initialize_dynamic_settings()
         self.EnemyArsenal = EnemyArsenal(self)
-        
+        self.powerups = pygame.sprite.Group()
 
         self.screen = pygame.display.set_mode(
             (self.settings.screen_w,self.settings.screen_h)
@@ -63,12 +65,45 @@ class AlienInvasion:
             self._check_events()
             if self.game_active:
                 self.ship.update()
+                self._update_powerups()
                 self.EnemyArsenal.spawn_test_bullet()
                 self.EnemyArsenal.update()
+                self._check_test_collisons()
                 # self.alien_fleet.update_fleet() 
                 # self._check_collisons()
             self._update_screen()
             self.clock.tick(self.settings.FPS)
+
+    def _check_test_collisons(self) -> None: # TEMP METHOD FOR MONITORING FEATURE FUNCTIONALITY
+        """Checks for collisons between the ship and the falling enemy bullets or falling powerups"""
+
+        if pygame.sprite.spritecollideany(self.ship, self.EnemyArsenal.arsenal):
+            print("Ship Hit! Test Collison Successful.")
+
+            self.EnemyArsenal.arsenal.empty()
+            self.ship.arsenal.arsenal.empty()
+            self.ship._center_ship()
+
+        caught_powerup = pygame.sprite.spritecollideany(self.ship, self.powerups)
+        if caught_powerup:
+            print(f"You recevied a {caught_powerup.type} ability!")
+            caught_powerup.kill()
+
+    def _update_powerups(self) -> None:
+        """Spawns random falling powerups and updates their position"""
+        if random.randint(1, 1000) <= 5:
+            x = random.randint(0, self.settings.screen_w - self.settings.powerup_w)
+
+            new_powerup = Powerup(self, x)
+
+            self.powerups.add(new_powerup)
+
+        self.powerups.update()
+
+        for powerup in self.powerups.copy():
+            if powerup.rect.top >= self.settings.screen_h:
+                self.powerups.remove(powerup)
+
 
     # def _check_collisons(self) -> None:
     #     """Checks for collisions between the ship, aliens, and projectiles"""
@@ -125,6 +160,8 @@ class AlienInvasion:
         """Redrawss the screen and ship, then flips it to the new display"""
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
+        for powerup in self.powerups.sprites():
+            powerup.draw_powerup()
         self.EnemyArsenal.draw()
         # self.alien_fleet.draw()
         # self.HUD.draw()
