@@ -14,7 +14,7 @@ from settings import Settings
 # from game_stats import GameStats
 from ship import Ship
 from arsenal import ShipArsenal, EnemyArsenal
-# from alien imporst Alien
+# from alien import Alien
 # from alien_fleet import AlienFleet
 # from time import sleep
 # from button import Button
