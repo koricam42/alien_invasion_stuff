@@ -54,6 +54,7 @@ class Settings:
         
         self.bullet_speed = 7
         self.enemy_bullet_speed = 5
+        self.bullet_spread_speed = 2.0
 
         self.bullet_amount = 5
         self.enemy_bullet_amount = 3

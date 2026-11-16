@@ -75,7 +75,7 @@ class AlienInvasion:
             self.clock.tick(self.settings.FPS)
 
     def _check_test_collisons(self) -> None: # TEMP METHOD FOR MONITORING FEATURE FUNCTIONALITY
-        """Checks for collisons between the ship and the falling enemy bullets or falling powerups"""
+        """Checks for collisons between the ship and the falling enemy bullets or the ship and the powerup to be obtained"""
 
         if pygame.sprite.spritecollideany(self.ship, self.EnemyArsenal.arsenal):
             print("Ship Hit! Test Collison Successful.")
@@ -86,7 +86,13 @@ class AlienInvasion:
 
         caught_powerup = pygame.sprite.spritecollideany(self.ship, self.powerups)
         if caught_powerup:
-            print(f"You recevied a {caught_powerup.type} ability!")
+            if caught_powerup.type == 'shield':
+                print("Shield powerup aquired! (Effect TBA)")
+                
+            else:
+                self.ship.arsenal.fire_mode = caught_powerup.type
+                print(f"You obtained a {caught_powerup.type} ability!")
+
             caught_powerup.kill()
 
     def _update_powerups(self) -> None:

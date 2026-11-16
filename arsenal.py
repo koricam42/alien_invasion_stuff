@@ -29,6 +29,8 @@ class ShipArsenal:
         self.settings = game.settings
         self.arsenal = pygame.sprite.Group()
 
+        self.fire_mode = 'normal'
+
     def update_arsenal(self) -> None:
         """Updates position of bullets and remove bullets that went offscreen
         """
@@ -48,15 +50,24 @@ class ShipArsenal:
         for bullet in self.arsenal.sprites():
             bullet.draw_bullet()
 
-    def fire_bullet(self):
-        """Creates and new bullet and adds to the arsenal if bullet limit is not reached
-
+    def fire_bullet(self): # Split firing modes into seperate methods later
+        """Fires a bullet(s) depending on current firing mode
         Returns:
             bool: True if bullet was created/fired, False otherwise
         """
         if len(self.arsenal) < self.settings.bullet_amount:
-            new_bullet = Bullet(self.game)
-            self.arsenal.add(new_bullet)
+            if self.fire_mode == 'normal':
+                new_bullet = Bullet(self.game)
+                self.arsenal.add(new_bullet)
+            elif self.fire_mode == 'spread':
+                spread_speed = self.settings.bullet_spread_speed
+
+                left_bullet = Bullet(self.game, x_speed=-spread_speed)
+                center_bullet = Bullet(self.game)
+                right_bullet = Bullet(self.game, x_speed=spread_speed)
+
+                self.arsenal.add(left_bullet, center_bullet, right_bullet)
+
             return True
         return False
 

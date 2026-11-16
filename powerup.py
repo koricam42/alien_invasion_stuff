@@ -23,7 +23,7 @@ class Powerup(Sprite):
         self.screen = game.screen
         self.settings = game.settings
         
-        self.type =  random.choice(['weapon', 'shield'])
+        self.type =  random.choice(['spread', 'shield'])
 
         self.image = pygame.image.load(self.settings.powerup_file)
         self.image = pygame.transform.scale(
